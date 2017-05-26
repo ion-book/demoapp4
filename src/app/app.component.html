@@ -1,42 +1,33 @@
-<form novalidate (submit)="onSubmit(user)" [formGroup]="user">
-  <label>
-    <span>Nombre Completo</span>
-    <input
-      type="text"
-      name="name"
-      placeholder="Nombre Completo">
-  </label>
-  <div class="error"
-  *ngIf="user.get('name').hasError('required') && user.get('name').touched">
-    El nombre es requerido.
-  </div>
-  <div class="error" *ngIf="user.get('name').hasError('minlength') && user.get('name').touched">
-    Debe tener al menos 2 caracteres.
+<form novalidate (ngSubmit)="onSubmit(user)" [formGroup]="user">
+      <label>
+        <span>Nombre Completo</span>
+        <input type="text" placeholder="Nombre Completo" formControlName="name">
+      </label>
+      <div class="error" *ngIf="user.get('name').touched && user.get('name').hasError('required')">
+        Nombre es requerido.
       </div>
-  <div formGroupName="account">
-    <label>
-      <span>Correo electronico</span>
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo electronico">
-    </label>
-     <div class="error"
-  *ngIf="user.get('account').get('email').hasError('required') && user.get('account').get('email').touched">
-    El email es requerido.
-  </div>
-  
-    <label>
-      <span>Confirmar correo electronico</span>
-      <input
-        type="email"
-        name="confirm"
-        placeholder="Confirmar Correo">
-    </label>
-    <div class="error"
-  *ngIf="user.get('account').get('confirm').hasError('required') && user.get('account').get('confirm').touched">
-    El email es requerido.
-  </div>
-  </div>
-  <button [disabled]="user.invalid" type="submit">Registrar</button>
-</form>
+      <div class="error" *ngIf="user.get('name').touched && user.get('name').hasError('minlength')">
+        Minimo 2 caracteres.
+      </div>
+      <div formGroupName="account">
+        <label>
+          <span>Correo electronico</span>
+          <input type="email" placeholder="Correo electronico" formControlName="email">
+        </label>
+        <div
+          class="error"
+          *ngIf="user.get('account').get('email').hasError('required') && user.get('account').get('email').touched">
+          Correo electronico es requerido
+        </div>
+        <label>
+          <span>Confirmar correo</span>
+          <input type="email" placeholder="Confirmar correo" formControlName="confirm">
+        </label>
+        <div
+          class="error"
+          *ngIf="user.get('account').get('confirm').hasError('required') && user.get('account').get('confirm').touched">
+          Confirmar el correo es requerido
+        </div>
+      </div>
+      <button type="submit" [disabled]="user.invalid">Sign up</button>
+    </form>
